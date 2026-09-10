@@ -8,6 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏁</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root{
     --garage-green:#16302A;
@@ -130,8 +131,57 @@
   .btn-dark{background:var(--ink);color:var(--paper);}
   .btn-dark:hover{background:#000;}
 
-  .hero-art{position:relative;}
-  .hero-art svg{width:100%;height:auto;}
+  .hero-art{position:relative;height:320px;}
+  .hero-art canvas{width:100% !important;height:100% !important;cursor:grab;}
+  .hero-art .hero-hint{
+    position:absolute;bottom:-6px;left:0;color:#7E8C82;font-size:0.78rem;
+    font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;
+  }
+
+  /* ---------- INTRO LOADER ---------- */
+  #intro{
+    position:fixed;inset:0;z-index:999;background:var(--garage-green-dark);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #intro.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  #intro .plate{
+    border:1.5px solid var(--brass);color:var(--brass-light);
+    font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:0.12em;
+    padding:10px 28px;opacity:0;transform:translateY(14px) scale(0.96);
+    animation:plateIn 1.1s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  #intro .plate-sub{
+    color:#6E7C73;font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+    margin-top:14px;opacity:0;animation:plateIn 1.1s cubic-bezier(.2,.8,.2,1) 0.35s forwards;
+  }
+  @keyframes plateIn{
+    0%{opacity:0;transform:translateY(14px) scale(0.96);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #intro .plate,#intro .plate-sub{animation:none;opacity:1;transform:none;}
+  }
+
+  /* ---------- 3D FLIP CARDS ---------- */
+  .card{perspective:1200px;background:none;border:none;padding:0;}
+  .card-inner{
+    position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+  }
+  .card:hover .card-inner, .card.flipped .card-inner{transform:rotateY(180deg);}
+  .card-face{
+    background:var(--paper-dim);border:1px solid #D6C9A8;position:relative;
+    padding:22px 20px 20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  }
+  .card-front{position:relative;}
+  .card-back{
+    position:absolute;inset:0;transform:rotateY(180deg);
+    display:flex;flex-direction:column;justify-content:center;background:var(--garage-green);color:var(--paper);
+  }
+  .card-back h4{color:var(--brass-light);font-size:1rem;margin-bottom:12px;}
+  .card-back ul{margin:0;padding-left:18px;font-size:0.86rem;color:#CDD8CC;line-height:1.7;}
+  .card-back .flip-hint{margin-top:16px;font-size:0.74rem;color:#7E8C82;font-family:'JetBrains Mono',monospace;}
 
   /* ---------- SECTION HEADERS ---------- */
   .section{padding:72px 0;}
@@ -153,20 +203,18 @@
 
   /* ---------- PRODUCT GRID ---------- */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .card{height:398px;}
+  .card-face{height:100%;box-sizing:border-box;}
   @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:600px){.grid{grid-template-columns:1fr;}}
-  .card{
-    background:var(--paper-dim);border:1px solid #D6C9A8;position:relative;
-    padding:22px 20px 20px;
-  }
-  .card::before,.card::after,.card .r2::before,.card .r2::after{
+  .card-face::before,.card-face::after,.card-face .r2::before,.card-face .r2::after{
     content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:var(--brass);
   }
-  .card::before{top:8px;left:8px;}
-  .card::after{top:8px;right:8px;}
-  .card .r2::before{bottom:8px;left:8px;position:absolute;}
-  .card .r2::after{bottom:8px;right:8px;position:absolute;}
-  .card .r2{position:absolute;inset:0;pointer-events:none;}
+  .card-face::before{top:8px;left:8px;}
+  .card-face::after{top:8px;right:8px;}
+  .card-face .r2::before{bottom:8px;left:8px;position:absolute;}
+  .card-face .r2::after{bottom:8px;right:8px;position:absolute;}
+  .card-face .r2{position:absolute;inset:0;pointer-events:none;}
   .card-art{
     background:var(--garage-green);height:150px;display:flex;align-items:center;justify-content:center;
     margin-bottom:16px;
@@ -259,6 +307,10 @@
 </style>
 </head>
 <body>
+<div id="intro">
+  <div class="plate">DIECAST DUO</div>
+  <div class="plate-sub mono">ROLLING UP THE SHUTTER…</div>
+</div>
 
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -317,9 +369,8 @@
       </div>
     </div>
     <div class="hero-art">
-      <svg viewBox="0 0 200 90" style="color:var(--brass-light);width:100%;">
-        <use href="#car-coupe"/>
-      </svg>
+      <div id="hero3d"></div>
+      <span class="hero-hint">DRAG TO ROTATE</span>
     </div>
   </div>
 </section>
@@ -465,16 +516,20 @@
 </div>
 
 <script>
+// RAZORPAY SETUP: for each product below, once you create its Payment Button in the
+// Razorpay dashboard (Payment Pages -> Payment Buttons), you'll get a "data-payment_button_id"
+// value that looks like "pl_ABC123xyz". Paste that value into the matching product's
+// razorpayBtnId field below. Leave it as null until you've made that product's button.
 const PRODUCTS = [
-  {id:1, plate:"No. 014", name:"'69 Fastback Coupe — Forest Green", scale:"1:18", cat:"muscle", price:2899, icon:"car-coupe"},
-  {id:2, plate:"No. 027", name:"Silverline Turbo Coupe, JDM Spec", scale:"1:24", cat:"jdm", price:1799, icon:"car-coupe"},
-  {id:3, plate:"No. 003", name:"Le Mans Racer No. 7, Weathered Finish", scale:"1:43", cat:"vintage", price:2199, icon:"car-racer"},
-  {id:4, plate:"No. 031", name:"Farm Pickup, Dust-Worn Livery", scale:"1:24", cat:"utility", price:1499, icon:"car-truck"},
-  {id:5, plate:"No. 009", name:"'71 Muscle Convertible — Burnt Orange", scale:"1:18", cat:"muscle", price:3199, icon:"car-coupe"},
-  {id:6, plate:"No. 040", name:"Twin-Cam Street Icon, Pearl White", scale:"1:24", cat:"jdm", price:1999, icon:"car-coupe"},
-  {id:7, plate:"No. 018", name:"Open-Wheel Grand Prix Racer, No. 12", scale:"1:43", cat:"vintage", price:2499, icon:"car-racer"},
-  {id:8, plate:"No. 022", name:"Trail Utility Truck, Matte Olive", scale:"1:24", cat:"utility", price:1699, icon:"car-truck"},
-  {id:9, plate:"No. 036", name:"Silver Arrow GT Concept", scale:"1:18", cat:"jdm", price:3499, icon:"car-coupe"},
+  {id:1, plate:"No. 014", name:"'69 Fastback Coupe — Forest Green", scale:"1:18", cat:"muscle", price:2899, icon:"car-coupe", razorpayBtnId:null},
+  {id:2, plate:"No. 027", name:"Silverline Turbo Coupe, JDM Spec", scale:"1:24", cat:"jdm", price:1799, icon:"car-coupe", razorpayBtnId:null},
+  {id:3, plate:"No. 003", name:"Le Mans Racer No. 7, Weathered Finish", scale:"1:43", cat:"vintage", price:2199, icon:"car-racer", razorpayBtnId:null},
+  {id:4, plate:"No. 031", name:"Farm Pickup, Dust-Worn Livery", scale:"1:24", cat:"utility", price:1499, icon:"car-truck", razorpayBtnId:null},
+  {id:5, plate:"No. 009", name:"'71 Muscle Convertible — Burnt Orange", scale:"1:18", cat:"muscle", price:3199, icon:"car-coupe", razorpayBtnId:null},
+  {id:6, plate:"No. 040", name:"Twin-Cam Street Icon, Pearl White", scale:"1:24", cat:"jdm", price:1999, icon:"car-coupe", razorpayBtnId:null},
+  {id:7, plate:"No. 018", name:"Open-Wheel Grand Prix Racer, No. 12", scale:"1:43", cat:"vintage", price:2499, icon:"car-racer", razorpayBtnId:null},
+  {id:8, plate:"No. 022", name:"Trail Utility Truck, Matte Olive", scale:"1:24", cat:"utility", price:1699, icon:"car-truck", razorpayBtnId:null},
+  {id:9, plate:"No. 036", name:"Silver Arrow GT Concept", scale:"1:18", cat:"jdm", price:3499, icon:"car-coupe", razorpayBtnId:null},
 ];
 
 let cart = JSON.parse(localStorage.getItem('dd_cart') || '[]');
@@ -488,19 +543,52 @@ function renderGrid(filter){
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <div class="r2"></div>
-      <div class="card-art"><svg viewBox="0 0 200 90" style="color:var(--brass-light);"><use href="#${p.icon}"/></svg></div>
-      <div class="card-plate mono">${p.plate} · Scale ${p.scale}</div>
-      <h3>${p.name}</h3>
-      <div class="specs mono">Hand-checked · Mint packaging</div>
-      <div class="card-foot">
-        <span class="price">₹${p.price.toLocaleString('en-IN')}</span>
-        <button class="add-btn" data-id="${p.id}">Add to garage</button>
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="r2"></div>
+          <div class="card-art"><svg viewBox="0 0 200 90" style="color:var(--brass-light);"><use href="#${p.icon}"/></svg></div>
+          <div class="card-plate mono">${p.plate} · Scale ${p.scale}</div>
+          <h3>${p.name}</h3>
+          <div class="specs mono">Hand-checked · Mint packaging</div>
+          <div class="card-foot">
+            <span class="price">₹${p.price.toLocaleString('en-IN')}</span>
+            <button class="add-btn" data-id="${p.id}">Add to garage</button>
+          </div>
+          <div class="razorpay-slot" data-id="${p.id}" style="margin-top:10px;"></div>
+        </div>
+        <div class="card-face card-back">
+          <h4>${p.plate} inspection notes</h4>
+          <ul>
+            <li>Panel gaps and paint checked under daylight</li>
+            <li>Chrome and tampo alignment verified</li>
+            <li>Axles roll freely, no wheel wobble</li>
+            <li>Original or resealed protective case</li>
+          </ul>
+          <span class="flip-hint">TAP AGAIN TO FLIP BACK</span>
+        </div>
       </div>`;
     grid.appendChild(card);
+    // Tap-to-flip on touch devices, since :hover doesn't work well on mobile
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.add-btn') || e.target.closest('.razorpay-slot')) return;
+      if (window.matchMedia('(hover: none)').matches) card.classList.toggle('flipped');
+    });
   });
   grid.querySelectorAll('.add-btn').forEach(btn => {
-    btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.id)));
+    btn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(parseInt(btn.dataset.id)); });
+  });
+  // Inject Razorpay's payment-button script properly so it actually executes
+  // (script tags inserted via innerHTML are ignored by browsers).
+  grid.querySelectorAll('.razorpay-slot').forEach(slot => {
+    const p = PRODUCTS.find(pp => pp.id === parseInt(slot.dataset.id));
+    if (!p.razorpayBtnId) return;
+    const form = document.createElement('form');
+    const s = document.createElement('script');
+    s.src = 'https://checkout.razorpay.com/v1/payment-button.js';
+    s.setAttribute('data-payment_button_id', p.razorpayBtnId);
+    s.async = true;
+    form.appendChild(s);
+    slot.appendChild(form);
   });
 }
 
@@ -585,6 +673,138 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
 
 renderGrid('all');
 renderCart();
+
+/* ---------- INTRO OVERLAY ---------- */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('intro').classList.add('hide'), reduceMotion ? 50 : 1100);
+});
+
+/* ---------- 3D HERO CAR (built from primitives — an original stylised shape, not a real model) ---------- */
+(function initHero3D(){
+  const mount = document.getElementById('hero3d');
+  if (!mount || typeof THREE === 'undefined') return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, mount.clientWidth / mount.clientHeight, 0.1, 100);
+  camera.position.set(4.2, 1.7, 5.4);
+  camera.lookAt(0, 0.3, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(mount.clientWidth, mount.clientHeight);
+  mount.appendChild(renderer.domElement);
+
+  // lighting: warm brass key light + cool green fill, garage-spotlight feel
+  scene.add(new THREE.AmbientLight(0x2a3d35, 1.1));
+  const key = new THREE.DirectionalLight(0xD4A75E, 1.5);
+  key.position.set(5, 6, 4);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x6fa88f, 0.6);
+  rim.position.set(-4, 2, -3);
+  scene.add(rim);
+
+  const car = new THREE.Group();
+
+  const bodyMat = new THREE.MeshStandardMaterial({ color: 0xA23327, metalness: 0.55, roughness: 0.35 });
+  const glassMat = new THREE.MeshStandardMaterial({ color: 0x16302A, metalness: 0.3, roughness: 0.15 });
+  const trimMat  = new THREE.MeshStandardMaterial({ color: 0xB8863B, metalness: 0.9, roughness: 0.25 });
+  const wheelMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.4, roughness: 0.6 });
+  const rimMat   = new THREE.MeshStandardMaterial({ color: 0xC9C2B2, metalness: 0.9, roughness: 0.3 });
+
+  // lower body wedge
+  const lower = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.5, 1.5), bodyMat);
+  lower.position.set(0, 0.35, 0);
+  car.add(lower);
+
+  // sloped nose + tail using angled boxes
+  const nose = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.42, 1.42), bodyMat);
+  nose.position.set(1.75, 0.32, 0);
+  nose.rotation.z = -0.18;
+  car.add(nose);
+  const tail = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.42, 1.42), bodyMat);
+  tail.position.set(-1.75, 0.4, 0);
+  tail.rotation.z = 0.14;
+  car.add(tail);
+
+  // cabin / greenhouse
+  const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.42, 1.3), bodyMat);
+  cabin.position.set(-0.1, 0.78, 0);
+  car.add(cabin);
+  const windshield = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.36, 1.22), glassMat);
+  windshield.position.set(0.55, 0.78, 0);
+  windshield.rotation.z = -0.38;
+  car.add(windshield);
+  const rearGlass = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.34, 1.22), glassMat);
+  rearGlass.position.set(-0.72, 0.76, 0);
+  rearGlass.rotation.z = 0.42;
+  car.add(rearGlass);
+
+  // rear spoiler
+  const spoiler = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.28, 1.5), trimMat);
+  spoiler.position.set(-2.05, 0.75, 0);
+  car.add(spoiler);
+  const spoilerDeck = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 1.4), trimMat);
+  spoilerDeck.position.set(-1.9, 0.92, 0);
+  car.add(spoilerDeck);
+
+  // brass trim strip along the sill
+  const sill = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.06, 1.56), trimMat);
+  sill.position.set(0, 0.14, 0);
+  car.add(sill);
+
+  // wheels
+  function wheel(x, z){
+    const g = new THREE.Group();
+    const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.34, 20), wheelMat);
+    tire.rotation.z = Math.PI / 2;
+    const rimMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.36, 20), rimMat);
+    rimMesh.rotation.z = Math.PI / 2;
+    g.add(tire, rimMesh);
+    g.position.set(x, 0.42, z);
+    return g;
+  }
+  car.add(wheel(1.25, 0.85), wheel(1.25, -0.85), wheel(-1.25, 0.85), wheel(-1.25, -0.85));
+
+  car.rotation.y = 0.5;
+  scene.add(car);
+
+  // soft ground shadow disc
+  const ground = new THREE.Mesh(
+    new THREE.CircleGeometry(2.6, 32),
+    new THREE.MeshBasicMaterial({ color: 0x0F211D, transparent: true, opacity: 0.45 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = 0.01;
+  scene.add(ground);
+
+  let dragging = false, lastX = 0, autoSpin = true, targetRotY = car.rotation.y;
+  mount.addEventListener('pointerdown', (e) => { dragging = true; autoSpin = false; lastX = e.clientX; mount.style.cursor = 'grabbing'; });
+  window.addEventListener('pointerup', () => { dragging = false; mount.style.cursor = 'grab'; });
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    lastX = e.clientX;
+    targetRotY += dx * 0.01;
+  });
+
+  function onResize(){
+    const w = mount.clientWidth, h = mount.clientHeight;
+    if (!w || !h) return;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+  window.addEventListener('resize', onResize);
+
+  function animate(){
+    requestAnimationFrame(animate);
+    if (autoSpin && !reduceMotion) targetRotY += 0.004;
+    car.rotation.y += (targetRotY - car.rotation.y) * 0.1;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
 </script>
 </body>
 </html>
