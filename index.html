@@ -31,11 +31,6 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:upperca
 .community{min-height:360px;background:linear-gradient(90deg,#0d1013e8,#0d101380),url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1800&q=85') center/cover;display:flex;align-items:center;padding:60px 7vw}.community h2{font-size:62px;margin:8px 0}.community p{color:#a8aeb5;max-width:470px;font-size:12px;line-height:1.8}
 footer{padding:60px 5vw 25px;border-top:1px solid #ffffff12;background:#050608}.footTop{display:flex;justify-content:space-between;gap:40px}.footLinks{display:flex;gap:55px}.footLinks strong{font-size:9px;letter-spacing:2px;color:#fff}.footLinks a{display:block;color:#777e85;font-size:10px;margin-top:12px}.footBottom{margin-top:45px;border-top:1px solid #ffffff10;padding-top:18px;color:#555c63;font-size:9px;display:flex;justify-content:space-between}
 .reveal{opacity:0;transform:translateY(25px);transition:.7s}.reveal.on{opacity:1;transform:none}
-.loadingNote{grid-column:1/-1;color:#7a8188;font-size:11px;letter-spacing:.5px;text-align:center;padding:40px 0}
-.product.soldOut .pic{filter:grayscale(0.85) brightness(0.55)}
-.soldOutBadge{position:absolute;top:14px;left:14px;z-index:3;background:#000000d9;border:1px solid var(--red);color:#fff;font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;font-weight:800}
-.product.soldOut .buy{opacity:.35;cursor:not-allowed;pointer-events:none}
-.product.soldOut .price{color:#767c82}
 @media(max-width:950px){.nav{display:none}.hero{grid-template-columns:1fr}.heroText{padding-top:100px}.heroVisual{margin-top:-40px}.modelInfo{top:35px}.products{grid-template-columns:repeat(2,1fr)}.brands{grid-template-columns:repeat(5,1fr)}.strip{grid-template-columns:repeat(2,1fr);height:auto}.stripItem{padding:18px}.stripItem:nth-child(2){border:0}.promos{grid-template-columns:1fr}}
 @media(max-width:560px){.header{gap:10px}.brand{font-size:23px}.tools{margin-left:auto}.heroText{padding-left:7vw;padding-right:7vw}.heroVisual{min-height:470px}.modelInfo{right:6vw;top:10px}.modelInfo h2{font-size:25px}.specs{display:none}#carCanvas{height:470px}.stats{left:7vw;bottom:24px;gap:14px}.stat strong{font-size:17px}.products{grid-template-columns:1fr}.section{padding:55px 5vw}.sectionHead{display:block}.sectionHead p{margin-top:15px}.brands{grid-template-columns:repeat(2,1fr)}.footTop{display:block}.footLinks{margin-top:30px;gap:25px}.footBottom{display:block}.footBottom span{display:block;margin-top:8px}}
 
@@ -56,6 +51,11 @@ footer{padding:60px 5vw 25px;border-top:1px solid #ffffff12;background:#050608}.
 .pic{height:218px;background:linear-gradient(135deg,#15191d,#070809)}
 .pic:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.4),transparent 50%);pointer-events:none}
 .placeholderCar{display:none}
+.products .product:nth-child(1) .pic{background-image:url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1000&q=85');background-size:cover;background-position:center}
+.products .product:nth-child(2) .pic{background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1000&q=85');background-size:cover;background-position:center}
+.products .product:nth-child(3) .pic{background-image:url('https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1000&q=85');background-size:cover;background-position:center}
+.products .product:nth-child(4) .pic{background-image:url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1000&q=85');background-size:cover;background-position:center}
+.products .product:nth-child(5) .pic{background-image:url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1000&q=85');background-size:cover;background-position:center}
 .pbody{background:linear-gradient(180deg,#0b0e11,#090b0d)}
 .brandBox{font-size:13px;letter-spacing:.5px}
 .promo{background-size:cover;background-position:center}
@@ -128,7 +128,7 @@ footer{padding:60px 5vw 25px;border-top:1px solid #ffffff12;background:#050608}.
       </iframe>
     </div>
     <div class="modelInfo"><h2>Ferrari F40</h2><small>1:18 &nbsp;|&nbsp; BBR</small><div class="specs">⚙ Diecast Metal <span>✓</span><br>◉ Opening Panels <span>✓</span><br>✦ Detailed Engine <span>✓</span><br>◇ Limited Edition <span>✓</span><br>◆ Collector Grade <span>✓</span></div></div>
-    <div class="dragHint">← Drag to rotate →</div><div style="position:absolute;left:50%;bottom:30px;transform:translateX(-50%);font-size:9px;letter-spacing:2px;color:#70777e;text-transform:uppercase;white-space:nowrap">360° VIEW · COLLECTOR EDITION</div>
+    <div class="dragHint">← Drag to rotate →</div><div style="position:absolute;left:50%;bottom:30px;transform:translateX(-50%);font-size:9px;letter-spacing:2px;color:#70777e;text-transform:uppercase;white-space:nowrap">36° VIEW · COLLECTOR EDITION</div>
   </div>
   <div class="stats"><div class="stat"><strong>5000+</strong><small>Models</small></div><div class="stat"><strong>100+</strong><small>Brands</small></div><div class="stat"><strong>Worldwide</strong><small>Shipping</small></div><div class="stat"><strong>Collector</strong><small>Community</small></div></div>
 </section>
@@ -137,8 +137,12 @@ footer{padding:60px 5vw 25px;border-top:1px solid #ffffff12;background:#050608}.
 
 <section class="section" id="shop">
   <div class="sectionHead reveal"><div><div class="eyebrow">CURATED FOR COLLECTORS</div><h2>Featured Models</h2><div class="redline"></div></div><p>From legendary road cars to motorsport icons, discover models selected for detail, provenance and display value.</p></div>
-  <div class="products" id="productsGrid">
-    <div class="loadingNote">Loading the collection…</div>
+  <div class="products">
+    <article class="product reveal"><div class="pic"><div class="placeholderCar" style="--c:#0d0e10"><div class="wheel a"></div><div class="wheel b"></div></div></div><div class="pbody"><h3>Porsche 911 GT3 RS</h3><small>1:18 · Minichamps</small><div class="price">₹36,999 <button class="buy">+</button></div></div></article>
+    <article class="product reveal"><div class="pic"><div class="placeholderCar" style="--c:#f3f3f3"><div class="wheel a"></div><div class="wheel b"></div></div></div><div class="pbody"><h3>BMW M3 E30 DTM</h3><small>1:18 · Solido</small><div class="price">₹29,999 <button class="buy">+</button></div></div></article>
+    <article class="product reveal"><div class="pic"><div class="placeholderCar" style="--c:#131416"><div class="wheel a"></div><div class="wheel b"></div></div></div><div class="pbody"><h3>Mercedes G63 AMG</h3><small>1:18 · AutoArt</small><div class="price">₹34,999 <button class="buy">+</button></div></div></article>
+    <article class="product reveal"><div class="pic"><div class="placeholderCar" style="--c:#c70f22"><div class="wheel a"></div><div class="wheel b"></div></div></div><div class="pbody"><h3>Ferrari F40</h3><small>1:18 · BBR</small><div class="price">₹42,999 <button class="buy">+</button></div></div></article>
+    <article class="product reveal"><div class="pic"><div class="placeholderCar" style="--c:#e1b800"><div class="wheel a"></div><div class="wheel b"></div></div></div><div class="pbody"><h3>Lamborghini SVJ</h3><small>1:18 · AutoArt</small><div class="price">₹38,999 <button class="buy">+</button></div></div></article>
   </div>
   <div class="promos" id="limited">
     <article class="promo redbg reveal"><h2>Limited<br>Editions</h2><p>Rare finds. Numbered runs. Models that belong behind glass.</p><a class="btn dark" href="#">Explore&nbsp; →</a></article>
@@ -160,85 +164,11 @@ footer{padding:60px 5vw 25px;border-top:1px solid #ffffff12;background:#050608}.
 document.querySelectorAll('.reveal').forEach(x=>{
   new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.12}).observe(x);
 });
+document.querySelectorAll('.buy').forEach(b=>b.onclick=()=>{
+  b.textContent='✓'; b.style.background='var(--red)'; b.style.borderColor='var(--red)';
+  setTimeout(()=>{b.textContent='+';b.style.background='transparent';b.style.borderColor='#ffffff30'},900);
+});
 document.querySelector('#cart').onclick=()=>alert('Your collector garage is empty — add a model to begin.');
-
-/* =========================================================================
-   PRODUCT FEED — powered by a free Supabase database, no code editing needed.
-   ---------------------------------------------------------------------
-   HOW TO SET THIS UP (one-time):
-   1. Create a free project at supabase.com
-   2. In Table Editor, create a table called "products" with columns:
-        name (text) | brand (text) | scale (text) | price (numeric)
-        image_url (text) | in_stock (bool, default true)
-   3. Enable Row Level Security (RLS) on that table, then add a policy
-      "Enable read access for all users" (SELECT only — do not add any
-      insert/update/delete policy). This keeps the public key read-only safe.
-   4. Add your products as rows right in that same Table Editor grid.
-   5. Go to Project Settings -> API, copy the "Project URL" and the
-      "anon public" key, and paste them below where marked.
-
-   AFTER SETUP: manage stock any time by editing rows in Supabase's
-   Table Editor — no code, no GitHub, nothing else to touch.
-   ========================================================================= */
-const SUPABASE_URL = "https://qerjkghkbonrscmziqlh.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlcmprZ2hrYm9ucnNjbXppcWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMDE0NTUsImV4cCI6MjEwNDY3NzQ1NX0.aMIo_S06_cj0Ei2Wp3hO0mWAWm1X8Pxw-xjLVRfMsNU";
-
-async function loadProducts(){
-  const grid = document.getElementById('productsGrid');
-  if (SUPABASE_URL.includes("YOUR_SUPABASE")){
-    grid.innerHTML = '<div class="loadingNote">Product database not connected yet — see the setup note in the code, or ask Claude to finish wiring it up.</div>';
-    return;
-  }
-  try{
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/products?select=*`,
-      { headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-      }}
-    );
-    if (!res.ok) throw new Error('Supabase fetch failed: ' + res.status);
-    let rows = await res.json();
-    // Show every product (in stock or not), tolerant of column-name capitalization,
-    // sorted with in-stock items first so sold-out ones drop to the end.
-    const isInStock = r => {
-      const v = r.in_stock ?? r.In_stock ?? r.InStock;
-      return v === undefined || v === true;
-    };
-    rows = rows.sort((a,b) => {
-      const stockDiff = (isInStock(b) ? 1 : 0) - (isInStock(a) ? 1 : 0);
-      if (stockDiff !== 0) return stockDiff;
-      return (a.Name||a.name||'').localeCompare(b.Name||b.name||'');
-    });
-    if (!rows.length){
-      grid.innerHTML = '<div class="loadingNote">No products yet — add a row in your Supabase products table.</div>';
-      return;
-    }
-    grid.innerHTML = rows.map(r => {
-      const soldOut = !isInStock(r);
-      return `
-      <article class="product reveal on${soldOut ? ' soldOut' : ''}">
-        <div class="pic" style="background-image:url('${(r.image_url||r.Image_url||'').trim()}');background-size:cover;background-position:center">
-          ${soldOut ? '<div class="soldOutBadge">Sold Out</div>' : ''}
-        </div>
-        <div class="pbody">
-          <h3>${r.Name || r.name || 'Untitled model'}</h3>
-          <small>${r.scale || r.Scale || ''} ${(r.scale||r.Scale) && (r.Brand||r.brand) ? '·' : ''} ${r.Brand || r.brand || ''}</small>
-          <div class="price">₹${Number(r.Price || r.price || 0).toLocaleString('en-IN')} <button class="buy"${soldOut ? ' disabled' : ''}>${soldOut ? '✕' : '+'}</button></div>
-        </div>
-      </article>`;
-    }).join('');
-    document.querySelectorAll('.buy').forEach(b=>b.onclick=()=>{
-      if (b.disabled) return;
-      b.textContent='✓'; b.style.background='var(--red)'; b.style.borderColor='var(--red)';
-      setTimeout(()=>{b.textContent='+';b.style.background='transparent';b.style.borderColor='#ffffff30'},900);
-    });
-  }catch(e){
-    console.error(e);
-    grid.innerHTML = '<div class="loadingNote">Couldn\'t load the product database right now. Check your internet connection, or that Row Level Security + the read policy are set up correctly in Supabase.</div>';
-  }
-}
-loadProducts();
 </script>
 </body>
 </html>
